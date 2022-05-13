@@ -23,6 +23,9 @@ export default function Dashboard() {
   return (
     <>
     <NavigationBar/>
+    <div class="col d-flex justify-content-center">
+            <h1>Temporary Dashboard Page</h1>
+        </div>
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>

@@ -37,8 +37,8 @@ function Map() {
     }))
 
     const handleOnClick = (selected) => {
-        var idCurArray=selected.value.split(',')
-        navigate(`/Book/${idCurArray[0]}/${idCurArray[1]}`)
+        localStorage.setItem( 'selectedHubName', selected );
+        navigate(`/Book`)
     }
     return (
         <GoogleMap
@@ -47,7 +47,6 @@ function Map() {
             mapContainerStyle={mapStyle}
         >
             {markers.map((marker) => (
-                
                 <Marker
                     key={`${marker.hubLocation.latitude}-${marker.hubLocation._long}`}
                     position={{ lat: marker.hubLocation._lat, lng: marker.hubLocation._long }}
@@ -68,10 +67,10 @@ function Map() {
                     >
                         <div>
                             <img height='100px'width='250px' src="https://lh5.googleusercontent.com/p/AF1QipORyPFKRG4fdGCPKwITLY9fL8Iv6eH9m6ghJBnf=w408-h274-k-no"></img>
-                            <h3>Hub: {selectedMarker.id}</h3>
+                            <h3>Hub Name: {selectedMarker.hubName}</h3>
                             <h5>Current capacity(Watts): {selectedMarker.hubCurrentCapacity}/{selectedMarker.hubMaxCapacity}</h5>
-                            <Button value={[selectedMarker.id,selectedMarker.hubCurrentCapacity].join()}
-                                onClick={(e)=>{handleOnClick(e.target)}}
+                            <Button value={selectedMarker.hubName}
+                                onClick={(e)=>{handleOnClick(e.target.value)}}
                             >Book now</Button>
                         </div>
                     </InfoWindow>

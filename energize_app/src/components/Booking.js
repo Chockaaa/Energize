@@ -2,35 +2,41 @@ import React, { useEffect, useState } from "react";
 import NavigationBar from "./NavigationBar";
 import { Button, Form,Card } from "react-bootstrap"
 import { Outlet, useParams } from "react-router-dom";
-import { getHubs, getHubFromID } from '../db/HubDB'
+import { getHubs, getHubFromName } from '../db/HubDB'
 
 const Booking = () => {
-  const hubSelected = useParams()
-  const [selectValue, setSelectValue] = useState(null)
+  //const hubSelected = useParams()
+  const selectedHubName = localStorage['selectedHubName']
+  localStorage.removeItem( 'selectedHubName' )
+
+  const [selectValue, setSelectValue] = useState('Alpha')
   const [currCap, setCurrCap] = useState('')
   const [amt,setAmt]=useState('')
   
+  
   useEffect(() => {
-    if(Object.keys(hubSelected).length==0){
-      getHubFromID('1001').then((res) => {
-        var hubDetails = res._delegate._document.data.value.mapValue.fields
-        setCurrCap(hubDetails.hubCurrentCapacity.integerValue);
+    if(selectedHubName){
+      getHubFromName(selectedHubName).then((res) => {
+        setCurrCap(res[0]._delegate._document.data.value.mapValue.fields.hubCurrentCapacity.integerValue);
+      });
+    }else{
+      getHubFromName('Alpha').then((res) => {
+        setCurrCap(res[0]._delegate._document.data.value.mapValue.fields.hubCurrentCapacity.integerValue);
       });
     }
   },[])
-
+  
   useEffect(() => {
     if (selectValue != null) {
-      getHubFromID(selectValue).then((res) => {
-        var hubDetails = res._delegate._document.data.value.mapValue.fields
-        setCurrCap(hubDetails.hubCurrentCapacity.integerValue);
+      getHubFromName(selectValue).then((res) => {
+        setCurrCap(res[0]._delegate._document.data.value.mapValue.fields.hubCurrentCapacity.integerValue);
       });
     }
     else {
-      setSelectValue(hubSelected.hubId)
+      setSelectValue(selectedHubName)
     }
   }, [selectValue]);
-
+  
 
   const handleSubmit =()=>{
     // submit hubId,how much to buy,current time
@@ -41,7 +47,7 @@ const Booking = () => {
   }
 
   const handleSelect = (val) => {
-    setSelectValue(val.toString())
+    setSelectValue(val)
   }
   const handleChange=(value)=>{
     try{
@@ -60,7 +66,7 @@ const Booking = () => {
   return (
     <>
       <NavigationBar />
-      {Object.keys(hubSelected).length!=0 ?
+      {selectedHubName ?
         //form with preselected hub
         <Card className='p-3 m-3s'>
         <Form>
@@ -68,13 +74,12 @@ const Booking = () => {
             <Form.Label>Hub Name</Form.Label>
             <Form.Control
               as="select"
-              defaultValue={hubSelected.hubId}
-              onChange={(e) => { handleSelect(e.target.value) }}
-            >
-              <option value={1001}>1001</option>
-              <option value={1002}>1002</option>
-              <option value={1003}>1003</option>
-              <option value={1004}>1004</option>
+              defaultValue={selectedHubName}
+              onChange={(e) => { handleSelect(e.target.value) }}>
+              <option value={'Alpha'}>Alpha</option>
+              <option value={'Bravo'}>Bravo</option>
+              <option value={'Charlie'}>Charlie</option>
+              <option value={'Delta'}>Delta</option>
             </Form.Control>
           </Form.Group>
 
@@ -99,14 +104,13 @@ const Booking = () => {
             <Form.Label>Hub Name</Form.Label>
             <Form.Control
               as="select"
-              defaultValue={1001}
-              
+              defaultValue={'Alpha'}
               onChange={(e) => { handleSelect(e.target.value) }}
             >
-              <option value={1001}>1001</option>
-              <option value={1002}>1002</option>
-              <option value={1003}>1003</option>
-              <option value={1004}>1004</option>
+              <option value={'Alpha'}>Alpha</option>
+              <option value={'Bravo'}>Bravo</option>
+              <option value={'Charlie'}>Charlie</option>
+              <option value={'Delta'}>Delta</option>
             </Form.Control>
           </Form.Group>
           <Form.Group className="mb-3" controlId="amtToBuy">

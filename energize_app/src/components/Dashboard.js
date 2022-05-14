@@ -7,8 +7,8 @@ export default function Dashboard() {
     <>
       <NavigationBar />
       <div className="col d-flex justify-content-center">
-        <h1>Temporary Dashboard Page</h1>
-    </div>
+        <h1 font-weight="bold">Map of Hubs</h1>
+      </div>
     <MapComp></MapComp>
     </>
     

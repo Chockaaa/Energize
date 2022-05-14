@@ -45,7 +45,7 @@ const Booking = () => {
   }
   const handleChange=(value)=>{
     try{
-      if(parseInt(value)>parseInt(currCap)||parseInt(value)<0){
+      if(parseInt(value)>parseInt(currCap)||parseInt(value)<=0){
         throw new Error('Invalid input')
       }
       else{
@@ -65,7 +65,7 @@ const Booking = () => {
         <Card className='p-3 m-3s'>
         <Form>
           <Form.Group className="mb-3" controlId="hubSelect">
-            <Form.Label>Hub ID</Form.Label>
+            <Form.Label>Hub Name</Form.Label>
             <Form.Control
               as="select"
               defaultValue={hubSelected.hubId}
@@ -79,7 +79,7 @@ const Booking = () => {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="amtToBuy">
-            <Form.Label>Amount to Buy(W) / {currCap}</Form.Label>
+            <Form.Label>Amount to Buy(W) (Available Capacity: {currCap})</Form.Label>
             <Form.Control
               required
               type="number"
@@ -96,7 +96,7 @@ const Booking = () => {
         <Card className='p-3 m-3s'>
         <Form>
           <Form.Group className="mb-3" controlId="hubSelect">
-            <Form.Label>Hub ID</Form.Label>
+            <Form.Label>Hub Name</Form.Label>
             <Form.Control
               as="select"
               defaultValue={1001}
@@ -110,7 +110,7 @@ const Booking = () => {
             </Form.Control>
           </Form.Group>
           <Form.Group className="mb-3" controlId="amtToBuy">
-            <Form.Label>Amount to Buy(W) / {currCap}</Form.Label>
+            <Form.Label>Amount to Buy(W) (Available Capacity: {currCap})</Form.Label>
             <Form.Control
               required
               type="number"

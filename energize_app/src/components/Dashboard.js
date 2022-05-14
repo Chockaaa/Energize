@@ -1,6 +1,6 @@
 import React from "react"
 import NavigationBar from "./NavigationBar"
-import MapComp from "./mapComponent"
+import MapComp from "./MapComponent"
 
 export default function Dashboard() {
   return (

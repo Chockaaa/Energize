@@ -1,7 +1,8 @@
 
 import { useMemo, useState, useEffect } from "react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-export default function Home() {
+import { Button } from "react-bootstrap"
+export default function MapComp() {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: 'AIzaSyA5FKJwPSdMiQpSCPaWS1oo2O7rgCCnBOE',
     });
@@ -56,6 +57,7 @@ function Map() {
                 >
                     <div>
                         <h2>{selectedMarker.title}</h2>
+                        <Button></Button>
                     </div>
                 </InfoWindow>
             ) : null}

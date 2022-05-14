@@ -14,6 +14,7 @@ const Transactions = () => {
       const transactionsArray = [];
       for (let i in res) {
         const doc = res[i].data();
+        doc.id = res[i].id;
         transactionsArray.push(doc);
       }
       setTransactions([...transactionsArray]);

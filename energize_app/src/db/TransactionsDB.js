@@ -11,4 +11,11 @@ function getTransactionsByEmail(email) {
     .catch((err) => console.error(err));
 }
 
-export { getTransactionsByEmail };
+function cancelTransaction(id) {
+  return db
+    .collection("Transactions")
+    .doc(id)
+    .update({ status: "Cancelled" });
+}
+
+export { getTransactionsByEmail, cancelTransaction };

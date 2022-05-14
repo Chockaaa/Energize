@@ -21,13 +21,15 @@ const SolarPanel = () => {
               <Card.Body>
                 <Col></Col>
                 <Col>
+                <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/search?q=buy+solar+panel">
                   <img
                     src="./BuySolar.jpg"
                     width="100%"
                     height="100%"
                     className="rounded mx-auto d-block"
                     alt=""
-                  />
+                    
+                  /></a>
                 </Col>
                 <Col></Col>
               </Card.Body>
@@ -39,6 +41,7 @@ const SolarPanel = () => {
               <Card.Body>
                 <Col></Col>
                 <Col >
+                <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/search?q=technical+support+for+solar+panel">
                   <img
                     src="./repair.png"
                     width="80%"
@@ -46,6 +49,7 @@ const SolarPanel = () => {
                     className="rounded mx-auto d-block"
                     alt=""
                   />
+                  </a>
                 </Col>
                 <Col></Col>
               </Card.Body>

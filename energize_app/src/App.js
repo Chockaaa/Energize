@@ -1,8 +1,6 @@
-import './App.css';
 import React from "react"
 import Signup from "./components/Signup"
 import Login from "./components/Login"
-import Profile from "./components/Profile"
 import Booking from "./components/Booking"
 import Dashboard from "./components/Dashboard"
 import PrivateRoute from "./components/PrivateRoute"
@@ -20,7 +18,6 @@ function App() {
           <AuthProvider>
             <Routes>
               <Route exact path="/" element={<PrivateRoute><Dashboard/></PrivateRoute>} />
-              <Route exact path="/Profile" element={<PrivateRoute><Profile/></PrivateRoute>} />
               <Route exact path="/Book" element={<PrivateRoute><Booking/></PrivateRoute>} />
               <Route exact path="/Transactions" element={<PrivateRoute><Transactions/></PrivateRoute>} />
               <Route exact path="/SolarPanels" element={<PrivateRoute><SolarPanel/></PrivateRoute>} />

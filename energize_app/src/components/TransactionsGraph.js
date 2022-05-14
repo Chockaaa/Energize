@@ -62,7 +62,6 @@ const TransactionsGraph = ({ transactions }) => {
             const energy = transactions[i].energyAmount
             monthArray[month] += energy
         }
-        console.log(type, monthArray)
         return monthArray;
     }
     const energyBought = getEnergy(0);

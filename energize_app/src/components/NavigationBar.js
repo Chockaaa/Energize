@@ -1,7 +1,8 @@
 import React, { useState }  from 'react';
 import { useAuth } from "../contexts/AuthContext"
-import {useNavigate } from "react-router-dom"
-import {Nav,Navbar,Container,NavDropdown} from 'react-bootstrap';
+import { Alert } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
+import { Nav,Navbar,Container,NavDropdown} from 'react-bootstrap';
 
 
 const NavigationBar=()=>{
@@ -37,6 +38,7 @@ const NavigationBar=()=>{
             <Nav>
             <NavDropdown title={currentUser.email} id="basic-nav-dropdown">
                 <Nav.Link href="/Profile">Profile</Nav.Link>
+                {error && <Alert variant="danger">{error}</Alert>}
                 <Nav.Link href="#" onClick={handleLogout}>Log Out</Nav.Link>
             </NavDropdown>
             </Nav>

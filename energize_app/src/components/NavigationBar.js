@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,8 @@ import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Typography } from "@mui/material";
+import { getUserCreditBalance } from "../db/UsersDB";
+
 
 const NavigationBar = () => {
   const [error, setError] = useState("");
@@ -17,11 +19,12 @@ const NavigationBar = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [userInfo, setEmail] = useState({
+  const [userInfo, setUserInfo] = useState({
     userEmail: currentUser.email,
     credit: 100,
   });
 
+  
   async function handleLogout() {
     setError("");
     try {
@@ -32,7 +35,12 @@ const NavigationBar = () => {
     }
   }
 
+  useEffect(() => {
+  getUserCreditBalance(currentUser.email).then(res=>setUserInfo({...userInfo,credit:res}))
+  },[]);
+
   return (
+    
     <Navbar bg="light" expand="lg" style={{ fontSize: "1.2rem" }}>
       <Container>
         <Navbar.Brand href="/">Energize</Navbar.Brand>

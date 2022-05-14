@@ -66,13 +66,13 @@ const TransactionsGraph = ({ transactions }) => {
     }
     setData({...data, datasets: [
         {
-            label: "Energy Bought",
+            label: "Energy Bought (W)",
             data: getEnergy(0),
             borderColor: "rgb(255, 99, 132)",
             backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
         {
-            label: "Energy Sold",
+            label: "Energy Sold (W)",
             data: getEnergy(1),
             borderColor: "rgb(53, 162, 235)",
             backgroundColor: "rgba(53, 162, 235, 0.5)",

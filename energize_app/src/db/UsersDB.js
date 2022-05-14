@@ -23,4 +23,17 @@ function getUserCreditBalance(email) {
     .catch((err) => console.error(err));
 }
 
-export { addUser, getUserCreditBalance };
+function updateUserCreditBalance(email, creditBalance) {
+  db.collection("Users")
+    .where("userName", "==", email)
+    .limit(1)
+    .get()
+    .then((query) => {
+      const doc = query.docs[0];
+      let user = doc.data();
+      user.creditBalance = creditBalance;
+      doc.ref.update(user);
+    });
+}
+
+export { addUser, getUserCreditBalance, updateUserCreditBalance };

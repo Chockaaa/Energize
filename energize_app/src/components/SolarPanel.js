@@ -20,12 +20,12 @@ const SolarPanel = () => {
               <Card.Header>Buy or Rent Solar Panels</Card.Header>
               <Card.Body>
                 <Col></Col>
-                <Col >
+                <Col>
                   <img
                     src="./BuySolar.jpg"
                     width="100%"
                     height="100%"
-                    className="d-inline-block align-top "
+                    className="rounded mx-auto d-block"
                     alt=""
                   />
                 </Col>
@@ -36,9 +36,16 @@ const SolarPanel = () => {
           <Col>
             <Card>
               <Card.Header>Contact for Technical Support</Card.Header>
-              <Card.Body >
-              <Col >
-                 
+              <Card.Body>
+                <Col></Col>
+                <Col >
+                  <img
+                    src="./repair.png"
+                    width="80%"
+                    height="80%"
+                    className="rounded mx-auto d-block"
+                    alt=""
+                  />
                 </Col>
                 <Col></Col>
               </Card.Body>

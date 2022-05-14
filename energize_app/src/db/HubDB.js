@@ -9,14 +9,14 @@ function getHubs(){
 
 export {getHubs}
 
-function getHubFromID(id){
+function getHubFromName(name){
     return db
     .collection("Hubs")
-    .doc(id)
+    .where('hubName','==',name)
     .get()
     .then((doc) => {
-      return doc;
+      return doc.docs;
     })
     .catch((err) => console.error(err));
 }
-export {getHubFromID}
+export {getHubFromName}

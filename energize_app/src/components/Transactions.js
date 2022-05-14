@@ -24,7 +24,6 @@ const Transactions = () => {
     <>
       <NavigationBar />
       <Container>
-        <h1>Temporary Transactions Page</h1>
         <div style={{height: '300px'}}><TransactionsGraph transactions={transactions} /></div>
         <TransactionsTable transactions={transactions} />
       </Container>

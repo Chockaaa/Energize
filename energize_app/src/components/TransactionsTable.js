@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { MDBDataTableV5 } from "mdbreact";
 
-export default function TransactionsTable({ transactions }) {
-  const [datatable, setDatatable] = useState({ columns: [], rows: [] });
+const TransactionsTable = ({ transactions }) => {
   const columns = useMemo(
     () => [
       {
@@ -48,12 +47,13 @@ export default function TransactionsTable({ transactions }) {
     ],
     []
   );
+  const [datatable, setDatatable] = useState({ columns, rows: [] });
 
   useEffect(() => {
     const rows = [];
-    for (let i = 0; i < transactions.length; i++) {
+    for (let i in transactions) {
       const {
-        HubId,
+        hubId,
         transactionType,
         energyAmount,
         status,
@@ -64,7 +64,7 @@ export default function TransactionsTable({ transactions }) {
       } = transactions[i];
       const type = transactionType === 0 ? "Buy" : "Sell"
       rows.push({
-        hubid: HubId,
+        hubid: hubId,
         type: type,
         energyamount: energyAmount,
         status: status,
@@ -74,13 +74,8 @@ export default function TransactionsTable({ transactions }) {
         creditsearned: creditsEarned,
       });
     }
-    console.log(rows, "HERE")
     setDatatable({columns, rows});
   }, [transactions, columns]);
-
-  useEffect(() => {
-    console.log(datatable)
-  }, [datatable])
 
   return (
     <MDBDataTableV5
@@ -93,3 +88,5 @@ export default function TransactionsTable({ transactions }) {
     />
   );
 }
+
+export default TransactionsTable;

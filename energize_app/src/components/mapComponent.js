@@ -3,7 +3,7 @@ import { useMemo, useState, useEffect } from "react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import { Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
-
+import {getHubs} from '../db/HubDB'
 export default function MapComp() {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: 'AIzaSyA5FKJwPSdMiQpSCPaWS1oo2O7rgCCnBOE',
@@ -18,14 +18,18 @@ function Map() {
     const [selectedMarker, setSelectedMarker] = useState(null)
     const navigate = useNavigate()
     useEffect(() => {
-        setMarkers(
-            [   
-                { id:1,title: 'Hub 1', lat: 18.9712, lng: -72, hubCurrentCapacity:1000 ,hubMaxCapacity:2000},
-                { id:2,title: 'Hub 2', lat: 18.9682, lng: -73, hubCurrentCapacity:5000 ,hubMaxCapacity:2000 },
-                { id:3,title: 'Hub 3', lat: 18.9712, lng: -73.3126, hubCurrentCapacity:2000 ,hubMaxCapacity:2000 }
-            ]
-        )
-    }, []);
+        getHubs().then((res) => {
+          const hubsArray = [];
+          for (let i in res) {
+            const doc = res[i].data();
+            doc.id = res[i].id
+            hubsArray.push(doc);
+          }
+          
+          setMarkers([...hubsArray]);
+        });
+      }, []);
+   
     const center = useMemo(() => ({ lat: 18.9712, lng: -73.2852 }), []);
     const mapStyle = useMemo(() => ({
         width: '100%',
@@ -33,9 +37,8 @@ function Map() {
     }))
 
     const handleOnClick = (selected) => {
-        console.log(selected.value)
-        
-        navigate(`/Book/${selected.value}`)
+        var idCurArray=selected.value.split(',')
+        navigate(`/Book/${idCurArray[0]}/${idCurArray[1]}`)
     }
     return (
         <GoogleMap
@@ -44,9 +47,10 @@ function Map() {
             mapContainerStyle={mapStyle}
         >
             {markers.map((marker) => (
+                
                 <Marker
-                    key={`${marker.lat}-${marker.lng}`}
-                    position={{ lat: marker.lat, lng: marker.lng }}
+                    key={`${marker.hubLocation.latitude}-${marker.hubLocation._long}`}
+                    position={{ lat: marker.hubLocation._lat, lng: marker.hubLocation._long }}
                     onClick={() => {
                         setSelectedMarker(marker);
                     }}
@@ -57,16 +61,16 @@ function Map() {
             {selectedMarker && (
                 <>
                     <InfoWindow
-                        position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
+                        position={{ lat: selectedMarker.hubLocation._lat, lng: selectedMarker.hubLocation._long }}
                         onCloseClick={() => {
                             setSelectedMarker(null);
                         }}
                     >
                         <div>
                             <img height='100px'width='250px' src="https://lh5.googleusercontent.com/p/AF1QipORyPFKRG4fdGCPKwITLY9fL8Iv6eH9m6ghJBnf=w408-h274-k-no"></img>
-                            <h3>Title: {selectedMarker.title}</h3>
+                            <h3>Hub: {selectedMarker.id}</h3>
                             <h5>Current capacity(Watts): {selectedMarker.hubCurrentCapacity}/{selectedMarker.hubMaxCapacity}</h5>
-                            <Button value={selectedMarker.id}
+                            <Button value={[selectedMarker.id,selectedMarker.hubCurrentCapacity].join()}
                                 onClick={(e)=>{handleOnClick(e.target)}}
                             >Book now</Button>
                         </div>

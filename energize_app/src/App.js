@@ -10,7 +10,7 @@ import { AuthProvider } from "./contexts/AuthContext"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Transactions from "./components/Transactions"
 import SolarPanel from "./components/SolarPanel"
-
+//<Route exact path="/Profile" element={<PrivateRoute><Profile/></PrivateRoute>} />
 function App() {
   return (
 
@@ -18,9 +18,9 @@ function App() {
           <AuthProvider>
             <Routes>
               <Route exact path="/" element={<PrivateRoute><Dashboard/></PrivateRoute>} />
-              <Route exact path="/Profile" element={<PrivateRoute><Profile/></PrivateRoute>} />
+              
               <Route exact path="/Book" element={<PrivateRoute><Booking/></PrivateRoute>}/>
-              <Route exact path="/Book/:hubId" element={<PrivateRoute><Booking/></PrivateRoute>}/>
+              <Route exact path="/Book/:hubId/:CurrCap" element={<PrivateRoute><Booking/></PrivateRoute>}/>
               <Route exact path="/Transactions" element={<PrivateRoute><Transactions/></PrivateRoute>} />
               <Route exact path="/SolarPanels" element={<PrivateRoute><SolarPanel/></PrivateRoute>} />
               <Route path="/signup" element={<Signup />} />

@@ -1,9 +1,25 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { MDBDataTableV5 } from "mdbreact";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { cancelTransaction } from "../db/TransactionsDB";
 
 const TransactionsTable = ({ transactions }) => {
+  const [show, setShow] = useState(false);
+  const [cancelTransactionId, setCancelTransactionId] = useState(null);
+
+  const handleClose = () => {
+    setShow(false);
+    setCancelTransactionId(null);
+  };
+  const handleShow = (id) => {
+    setShow(true);
+    setCancelTransactionId(id);
+  };
+
+  function handleCancel(id) {
+    cancelTransaction(id).then((_) => window.location.reload(false));
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -56,10 +72,6 @@ const TransactionsTable = ({ transactions }) => {
   );
   const [datatable, setDatatable] = useState({ columns, rows: [] });
 
-  function handleCancel(id) {
-    cancelTransaction(id).then((_) => window.location.reload(false));
-  }
-
   useEffect(() => {
     const rows = [];
     for (let i in transactions) {
@@ -89,7 +101,7 @@ const TransactionsTable = ({ transactions }) => {
             variant="danger"
             size="sm"
             className="m-0"
-            onClick={(e) => handleCancel(id)}
+            onClick={() => handleShow(id)}
           >
             Cancel
           </Button>
@@ -100,15 +112,37 @@ const TransactionsTable = ({ transactions }) => {
   }, [transactions, columns]);
 
   return (
-    <MDBDataTableV5
-      hover
-      entriesOptions={[5, 10]}
-      entries={10}
-      pagesAmount={4}
-      data={datatable}
-      searchTop
-      searchBottom={false}
-    />
+    <>
+      <MDBDataTableV5
+        hover
+        entriesOptions={[5, 10]}
+        entries={10}
+        pagesAmount={4}
+        data={datatable}
+        searchTop
+        searchBottom={false}
+      />
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Cancel Transaction</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to cancel the transaction?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" size="sm" onClick={handleClose}>
+            No
+          </Button>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => handleCancel(cancelTransactionId)}
+          >
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 

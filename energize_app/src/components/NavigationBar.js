@@ -69,12 +69,12 @@ const NavigationBar = () => {
                     <Col></Col>
                   </Row>
                   <Row className="mx-auto my-5">
-                    <Typography fontFamily="Monospace" variant="h5" align="center">
+                    <Typography sx={{ letterSpacing: 2, fontFamily: 'default', textTransform: 'uppercase' }}  variant="h5" align="center">
                       {userInfo.userEmail}
                     </Typography>
                   </Row>
                   <Row className="mx-auto my-5">
-                    <Typography fontFamily="Monospace" variant="h5" align="center">
+                    <Typography sx={{ letterSpacing: 2, fontFamily: 'default',textTransform: 'uppercase' }} variant="h5" align="center">
                       Credits: {userInfo.credit}
                     </Typography>
                   </Row>

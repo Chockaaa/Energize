@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavigationBar from "./NavigationBar";
-import { Container, Card, Button, Modal, Form, Offcanvas } from "react-bootstrap";
+import { Container, Card, Button, Modal, Form } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { updateUserCreditBalance } from "../../db/UsersDB";
@@ -30,7 +30,6 @@ export default function HubDashboard() {
   const [docId, setDocId] = useState(0);
 
 
-  const [showCanvas, setShowCanvas] = useState(false);
   const [pendingTransactions,setPendingTransactions] =useState([])
 
   const handleChangeAmt = (value) => {

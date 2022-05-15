@@ -16,6 +16,7 @@ import BuyCredits from "./components/Client/BuyCredits"
 //Hub
 import HubLogin from "./components/Hub/Login"
 import HubForgotPassword from "./components/Hub/ForgotPassword"
+import HubDashboard from "./components/Hub/HubDashboard"
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { AuthProvider } from "./contexts/AuthContext"
@@ -39,6 +40,7 @@ function App() {
 
               <Route path="/hub/login" element={<HubLogin />} />
               <Route path="/hub/forgot-password" element={<HubForgotPassword />} />
+              <Route path="/hub" element={<PrivateRoute><HubDashboard /></PrivateRoute>} />
             </Routes>
           </AuthProvider>
         </Router>

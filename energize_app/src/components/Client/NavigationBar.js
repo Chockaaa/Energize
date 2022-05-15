@@ -61,7 +61,7 @@ const NavigationBar = () => {
           <>
             <Button variant="outline-light" onClick={() => setShow(true)}>
               <img
-                src="./logo.jpg"
+                src="/images/logo.jpg"
                 width="30"
                 height="30"
                 className="d-inline-block align-top"

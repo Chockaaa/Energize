@@ -124,7 +124,6 @@ export default function HubDashboard() {
   return (
     <>
       <NavigationBar />
-      {JSON.stringify(pendingTransactions)}
       <Container>
         <Row className="mx-auto my-5">
           <div className="col d-flex justify-content-center">

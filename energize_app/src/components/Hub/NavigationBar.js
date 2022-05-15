@@ -48,8 +48,6 @@ const NavigationBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/hub">Hub Home</Nav.Link>
-            <Nav.Link href="/hub/BuySell">Buy/Sell Energy</Nav.Link>
-            <Nav.Link href="/hub/TopupCredits">Top Up Credits</Nav.Link>
           </Nav>
           <>
             <Button variant="outline-light" onClick={handleShow}>

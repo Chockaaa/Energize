@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import NavigationBar from "./NavigationBar";
 import { Container, Card, Button, Modal, Form } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
@@ -9,7 +9,7 @@ import { updateUserCreditBalance } from "../../db/UsersDB";
 
 export default function HubDashboard() {
   const [buyshow, buysetShow] = useState(false);
-  const { currentUser, logout } = useAuth();
+
   const buyhandleClose = () => buysetShow(false);
   const buyhandleShow = () => buysetShow(true);
   const [sellshow, sellsetShow] = useState(false);
@@ -123,24 +123,34 @@ export default function HubDashboard() {
                   <Modal.Body>
                     <Form>
                       <Form.Group as={Row} className="mb-3" controlId="hubID">
-                        <Form.Label column sm="2">Hub ID</Form.Label>
-                        <Col sm="10"> <Form.Control
-                          type="number"
-                          placeholder="Enter Hub Id"
-                        />
+                        <Form.Label column sm="2">
+                          Hub ID
+                        </Form.Label>
+                        <Col sm="10">
+                          {" "}
+                          <Form.Control
+                            type="number"
+                            placeholder="Enter Hub Id"
+                          />
                         </Col>
                       </Form.Group>
-                      <Form.Group as={Row} className="mb-3" controlId="energyAmount">
-                        <Form.Label column sm="2">Energy</Form.Label>
-                        <Col sm="10"> <Form.Control
-                          type="number"
-                          placeholder="Amount Energy Sold"
-                        />
-                        <Form.Text>Conversion Rate: 0.2 x Energy </Form.Text>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="energyAmount"
+                      >
+                        <Form.Label column sm="2">
+                          Energy
+                        </Form.Label>
+                        <Col sm="10">
+                          {" "}
+                          <Form.Control
+                            type="number"
+                            placeholder="Amount Energy Sold"
+                          />
+                          <Form.Text>Conversion Rate: 0.2 x Energy </Form.Text>
                         </Col>
                       </Form.Group>
-                      
-            
                     </Form>
                   </Modal.Body>
                   <Modal.Footer>

@@ -3,7 +3,7 @@ import { useMemo, useState, useEffect } from "react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import { Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
-import {getHubs} from '../db/HubDB'
+import {getHubs} from '../../db/HubDB'
 export default function MapComp() {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,

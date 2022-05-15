@@ -7,11 +7,11 @@ const StartPage = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center">
+    <div className="d-flex flex-column justify-content-center align-items-center mt-5">
       <Image
         src="/images/logo.jpg"
         roundedCircle
-        className="m-5"
+        className="mt-5 mb-4"
         style={{ height: LOGO_SIZE, width: LOGO_SIZE }}
       />
       <Button onClick={() => navigate("/login")}>Client</Button>

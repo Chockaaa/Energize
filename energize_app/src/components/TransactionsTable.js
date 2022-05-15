@@ -86,14 +86,13 @@ const TransactionsTable = ({ transactions }) => {
         cost,
         creditsEarned,
       } = transactions[i];
-      const type = transactionType === 0 ? "Buy" : "Sell";
       rows.push({
         hubid: hubId,
-        type: type,
+        type: transactionType === 0 ? "Buy" : "Sell",
         energyamount: energyAmount,
         status: status,
         datecreated: dateCreated.toDate().toLocaleString(),
-        datecompleted: dateCompleted.toDate().toLocaleString(),
+        datecompleted: dateCompleted ? dateCompleted.toDate().toLocaleString() : "",
         cost: cost,
         creditsearned: creditsEarned || "-",
         actions: status === "Pending" && (

@@ -14,8 +14,8 @@ function getHubFromName(name){
     .collection("Hubs")
     .where('hubName','==',name)
     .get()
-    .then((doc) => {
-      return doc.docs;
+    .then((querySnapshot) => {
+      return querySnapshot.docs;
     })
     .catch((err) => console.error(err));
 }

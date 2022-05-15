@@ -25,15 +25,11 @@ const Transactions = () => {
     <>
       <NavigationBar />
       <Container>
-       
-          <Card className="m-1 p-2">
-          <div style={{ height: '300px' }}><TransactionsGraph transactions={transactions} /></div>
-          </Card>
-          <Card className="m-1">
-            <Card.Header>Transactions by User</Card.Header>
+          <div className="my-3" style={{ height: '300px' }}><TransactionsGraph transactions={transactions} /></div>
+          <Card className="mt-5">
+            <Card.Header className="py-3 font-weight-bold">Transactions by User</Card.Header>
             <TransactionsTable transactions={transactions} />
           </Card>
-        
       </Container>
     </>
   );

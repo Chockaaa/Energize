@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Typography } from "@mui/material";
 import { getUserInfo } from "../../db/UsersDB";
+import CreditsIcon from "../CreditsIcon";
 
 
 const NavigationBar = () => {
@@ -84,7 +85,7 @@ const NavigationBar = () => {
                   </Row>
                   <Row className="mx-auto my-3">
                     <Typography sx={{ letterSpacing: 2, fontFamily: 'default' }} variant="h5" align="center">
-                      Credits: {userInfo.credit}
+                      Credits: {userInfo.credit} <CreditsIcon /> hi
                     </Typography>
                   </Row>
                   

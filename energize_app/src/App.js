@@ -8,7 +8,6 @@ import Signup from "./components/Client/Signup"
 import Login from "./components/Client/Login"
 import Booking from "./components/Client/Booking"
 import Dashboard from "./components/Client/Dashboard"
-import ForgotPassword from "./components/Client/ForgotPassword"
 import Transactions from "./components/Client/Transactions"
 import SolarPanel from "./components/Client/SolarPanel"
 import BuyCredits from "./components/Client/BuyCredits"
@@ -36,7 +35,6 @@ function App() {
               <Route exact path="/BuyCredits" element={<PrivateRoute><BuyCredits/></PrivateRoute>} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
 
               <Route path="/hub/login" element={<HubLogin />} />
               <Route path="/hub/forgot-password" element={<HubForgotPassword />} />

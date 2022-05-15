@@ -1,23 +1,38 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { MDBDataTableV5 } from "mdbreact";
 import { Button, Modal } from "react-bootstrap";
-import { cancelTransaction } from "../../db/TransactionsDB";
+import { updateTransaction } from "../../db/TransactionsDB";
+import { updateUserCreditBalance } from "../../db/UsersDB";
+import { useAuth } from "../../contexts/AuthContext";
+import {updateHubEnergyCapacity} from "../../db/HubsDB";
+
 
 const TransactionsTable = ({ transactions }) => {
   const [show, setShow] = useState(false);
   const [cancelTransactionId, setCancelTransactionId] = useState(null);
+  const [creditsToRemove,setCreditsToRemove]=useState(null);
+  const [energyToRemove,setenergyToRemove]=useState(null);
+  const [hubId,sethubId]=useState(null);
+  const { currentUser } = useAuth();
 
   const handleClose = () => {
     setShow(false);
     setCancelTransactionId(null);
   };
-  const handleShow = (id) => {
+  const handleShow = (id,credits,energy,hubId) => {
     setShow(true);
     setCancelTransactionId(id);
+    setCreditsToRemove(credits);
+    setenergyToRemove(energy);
+    sethubId(hubId)
   };
 
-  function handleCancel(id) {
-    cancelTransaction(id).then((_) => window.location.reload(false));
+
+  function completeBuyTransaction(transactionId) {
+    updateTransaction(transactionId)
+    .then((_)=>updateUserCreditBalance(currentUser.email,creditsToRemove))
+    .then((_)=>updateHubEnergyCapacity(energyToRemove,hubId))
+    .then((_) => window.location.reload(false));
   }
 
   const columns = useMemo(
@@ -98,12 +113,12 @@ const TransactionsTable = ({ transactions }) => {
         creditsearned: creditsEarned,
         actions: status === "Pending" && (
           <Button
-            variant="danger"
+            variant="success"
             size="sm"
             className="m-0"
-            onClick={() => handleShow(id)}
+            onClick={() => handleShow(id,creditsEarned,energyAmount,hubId)}
           >
-            Cancel
+            START
           </Button>
         ),
       });
@@ -125,19 +140,19 @@ const TransactionsTable = ({ transactions }) => {
       />
       <Modal show={show} onHide={handleClose} centered backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Cancel Transaction</Modal.Title>
+          <Modal.Title>Start Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to cancel the transaction?
+          Are you sure you want to Start Charging?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" size="sm" onClick={handleClose}>
             No
           </Button>
           <Button
-            variant="primary"
+            variant="success"
             size="sm"
-            onClick={() => handleCancel(cancelTransactionId)}
+            onClick={() => completeBuyTransaction(cancelTransactionId)}
           >
             Yes
           </Button>

@@ -30,6 +30,7 @@ function cancelTransaction(id) {
     .doc(id)
     .update({ status: "Cancelled" });
 }
+
 function addTransaction(data) {
   db.collection("Transactions")
     .add({
@@ -38,4 +39,11 @@ function addTransaction(data) {
     })
     .catch((err) => console.error(err));
 }
-export { getTransactionsByEmail, cancelTransaction,addTransaction,getPendingTransactionsByEmail };
+
+function updateTransaction(id) {
+  return db
+    .collection("Transactions")
+    .doc(id)
+    .update({ status: "Complete" });
+}
+export {updateTransaction, getTransactionsByEmail, cancelTransaction,addTransaction,getPendingTransactionsByEmail };

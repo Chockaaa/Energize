@@ -31,10 +31,6 @@ export default function HubDashboard() {
 
 
   const [showCanvas, setShowCanvas] = useState(false);
-
-  const handleCloseCanvas = () => setShowCanvas(false);
-  const handleShowCanvas = () => setShowCanvas(true);
-
   const [pendingTransactions,setPendingTransactions] =useState([])
 
   const handleChangeAmt = (value) => {
@@ -69,7 +65,7 @@ export default function HubDashboard() {
     updateHubEnergyCapacity(data.creditsEarned, data.hubId);
     sellsetShow(false);
     setAmt(0);
-    setShowCanvas(true);
+
   }
 
   useEffect(() => {
@@ -170,7 +166,7 @@ export default function HubDashboard() {
                     <Button variant="secondary" onClick={buyhandleClose}>
                       Close
                     </Button>
-                    <Button variant="primary">Start Transaction</Button>
+                    
                   </Modal.Footer>
                 </Modal>
               </Card.Body>
@@ -279,14 +275,7 @@ export default function HubDashboard() {
           </Col>
         </Row>
       </Container>
-      <Offcanvas show={showCanvas} onHide={handleCloseCanvas}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Plug in Charger</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-      Charging Status
-        </Offcanvas.Body>
-      </Offcanvas>
+
     </>
   );
 }

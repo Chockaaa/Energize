@@ -20,7 +20,6 @@ function App() {
               <Route exact path="/" element={<PrivateRoute><Dashboard/></PrivateRoute>} />
               
               <Route exact path="/Book" element={<PrivateRoute><Booking/></PrivateRoute>}/>
-              <Route exact path="/Book/:hubId/:CurrCap" element={<PrivateRoute><Booking/></PrivateRoute>}/>
               <Route exact path="/Transactions" element={<PrivateRoute><Transactions/></PrivateRoute>} />
               <Route exact path="/SolarPanels" element={<PrivateRoute><SolarPanel/></PrivateRoute>} />
               <Route path="/signup" element={<Signup />} />

@@ -48,11 +48,13 @@ const NavigationBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/hub">Hub Home</Nav.Link>
+            <Nav.Link href="/hub/BuySell">Buy/Sell Energy</Nav.Link>
+            <Nav.Link href="/hub/TopupCredits">Top Up Credits</Nav.Link>
           </Nav>
           <>
             <Button variant="outline-light" onClick={handleShow}>
               <img
-                src="./logo.jpg"
+                src="/images/logo.jpg"
                 width="30"
                 height="30"
                 className="d-inline-block align-top"
@@ -69,7 +71,7 @@ const NavigationBar = () => {
                   <Row>
                     <Col></Col>
                     <Col>
-                      <img src="./profile.png" width="100%" height="100%" class="d-inline-block align-top" alt="" />
+                      <img src="/images/profile.png" width="100%" height="100%" class="d-inline-block align-top" alt="" />
                     </Col>
                     <Col></Col>
                   </Row>

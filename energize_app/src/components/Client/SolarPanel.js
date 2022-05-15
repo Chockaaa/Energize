@@ -23,7 +23,7 @@ const SolarPanel = () => {
                 <Col>
                 <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/search?q=buy+solar+panel">
                   <img
-                    src="./BuySolar.jpg"
+                    src="/images/BuySolar.jpg"
                     width="100%"
                     height="100%"
                     className="rounded mx-auto d-block"
@@ -43,7 +43,7 @@ const SolarPanel = () => {
                 <Col >
                 <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/search?q=technical+support+for+solar+panel">
                   <img
-                    src="./repair.png"
+                    src="/images/repair.png"
                     width="80%"
                     height="80%"
                     className="rounded mx-auto d-block"

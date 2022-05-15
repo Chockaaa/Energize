@@ -1,14 +1,11 @@
 import React, { useState,useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Nav, Navbar, Container, Button, Image } from "react-bootstrap";
-import Modal from "react-bootstrap/Modal";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Nav, Navbar, Container, Button, Image, Alert, Modal, Row, Col } from "react-bootstrap";
 import { Typography } from "@mui/material";
 import { getUserInfo } from "../../db/UsersDB";
 import CreditCardForm from "./CreditCardForm";
+import CreditsIcon from "../CreditsIcon";
 
 const NavigationBar = () => {
   const [error, setError] = useState("");
@@ -46,7 +43,7 @@ const NavigationBar = () => {
 
   return (
     
-    <Navbar bg="light" expand="lg" style={{ fontSize: "1.2rem" }}>
+    <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand href="/">Energize</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -59,15 +56,15 @@ const NavigationBar = () => {
             <Nav.Link href="/SolarPanels">Buy/Rent Solar Panels</Nav.Link>
           </Nav>
           <>
-            <Button variant="outline-light" onClick={() => setShow(true)}>
-              <img
+              <Image
                 src="/images/logo.jpg"
-                width="30"
-                height="30"
-                className="d-inline-block align-top"
+                width="40px"
+                height="40px"
+                className="d-inline-block align-top rounded-circle"
                 alt=""
+                onClick={() => setShow(true)}
+                style={{ cursor: "pointer" }}
               />
-            </Button>
 
             <Modal show={show} onHide={() => setShow(false)} centered backdrop="static" keyboard={false}>
               <Modal.Header closeButton>
@@ -89,7 +86,7 @@ const NavigationBar = () => {
                   </Row>
                   <Row className="mx-auto my-3">
                     <Typography sx={{ letterSpacing: 2, fontFamily: 'default' }} variant="h5" align="center">
-                      Credits: {userInfo.credit}
+                      Credits: {userInfo.credit} <CreditsIcon />
                     </Typography>
                   </Row>
                   <Row className="mx-auto my-3">

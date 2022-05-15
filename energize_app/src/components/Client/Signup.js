@@ -34,8 +34,8 @@ export default function Signup() {
   }
 
   return (
-    <>
-      <Card>
+    <div className="d-flex justify-content-center">
+      <Card style={{ width: '25%', marginTop: '15vh'}}>
         <Card.Body>
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -44,23 +44,23 @@ export default function Signup() {
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" ref={emailRef} required />
             </Form.Group>
-            <Form.Group id="password">
+            <Form.Group id="password" className="mt-3">
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" ref={passwordRef} required />
             </Form.Group>
-            <Form.Group id="password-confirm">
+            <Form.Group id="password-confirm" className="mt-3">
               <Form.Label>Password Confirmation</Form.Label>
               <Form.Control type="password" ref={passwordConfirmRef} required />
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+            <Button disabled={loading} className="w-100 mt-3 mx-0" type="submit">
               Sign Up
             </Button>
           </Form>
         </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
+        <div className="w-100 text-center mb-3">
         Already have an account? <Link to="/login">Log In</Link>
       </div>
-    </>
+      </Card>
+    </div>
   )
 }

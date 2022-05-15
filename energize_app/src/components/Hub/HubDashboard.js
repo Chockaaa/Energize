@@ -3,9 +3,10 @@ import NavigationBar from "./NavigationBar";
 import { Container, Card, Button, Modal, Form } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useAuth } from "../../contexts/AuthContext";
-
 import { updateUserCreditBalance } from "../../db/UsersDB";
+import { useAuth } from "../../contexts/AuthContext";
+import { addTransaction } from "../../db/TransactionsDB";
+import { getHubFromName, updateHubEnergyCapacity } from "../../db/HubsDB";
 
 export default function HubDashboard() {
   const [buyshow, buysetShow] = useState(false);
@@ -16,6 +17,93 @@ export default function HubDashboard() {
 
   const sellhandleClose = () => sellsetShow(false);
   const sellhandleShow = () => sellsetShow(true);
+
+  const { currentUser } = useAuth();
+  const currentDate = new Date();
+  const selectedHubName = localStorage["selectedHubName"];
+  const [selectValue, setSelectValue] = useState(null);
+  const [currToCred, setCurrToCred] = useState(10);
+  const [currCap, setCurrCap] = useState(null);
+  const [amt, setAmt] = useState("");
+  const [convRate, setConvRate] = useState(0.2);
+  const [docId, setDocId] = useState(0);
+
+  const [isLoadingSell, setLoadingSell] = useState(false);
+
+  const handleChangeAmt = (value) => {
+    try {
+      if (parseInt(value) > parseInt(currCap) || parseInt(value) <= 0) {
+        throw new Error("Invalid input");
+      } else {
+        setAmt(value);
+      }
+    } catch (e) {
+      console.log("Invalid input, input out of available capacity range");
+    }
+  };
+
+  const handleSelect = (val) => {
+    setSelectValue(val);
+  };
+
+  function sellElectricity(updateAmount, e) {
+    const data = {
+      cost: amt * convRate,
+      creditsEarned: 1 * currToCred * amt * convRate,
+      dateCompleted: "",
+      energyAmount: parseInt(amt),
+      hubId: parseInt(docId),
+      status: "Completed",
+      transactionType: 1,
+      userName: currentUser.email,
+    };
+    addTransaction(data);
+    updateUserCreditBalance(currentUser.email, data.creditsEarned);
+    updateHubEnergyCapacity(data.creditsEarned, data.hubId);
+    setLoadingSell(true);
+    sellsetShow(false);
+    setAmt(0);
+  }
+
+  useEffect(() => {
+    getHubFromName("Alpha").then((res) => {
+      setCurrToCred(
+        res[0]._delegate._document.data.value.mapValue.fields.currencyToCredits
+          .integerValue
+      );
+      setCurrCap(
+        res[0]._delegate._document.data.value.mapValue.fields.hubCurrentCapacity
+          .integerValue
+      );
+      setConvRate(
+        res[0]._delegate._document.data.value.mapValue.fields.wattsToCredits
+          .doubleValue
+      );
+      setDocId(res[0].id);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (selectValue != null) {
+      getHubFromName(selectValue).then((res) => {
+        setCurrToCred(
+          res[0]._delegate._document.data.value.mapValue.fields
+            .currencyToCredits.integerValue
+        );
+        setCurrCap(
+          res[0]._delegate._document.data.value.mapValue.fields
+            .hubCurrentCapacity.integerValue
+        );
+        setConvRate(
+          res[0]._delegate._document.data.value.mapValue.fields.wattsToCredits
+            .doubleValue
+        );
+        setDocId(res[0].id);
+      });
+    } else {
+      setSelectValue(selectedHubName);
+    }
+  }, [selectValue]);
 
   return (
     <>
@@ -124,14 +212,35 @@ export default function HubDashboard() {
                     <Form>
                       <Form.Group as={Row} className="mb-3" controlId="hubID">
                         <Form.Label column sm="2">
-                          Hub ID
+                          Transaction Start
                         </Form.Label>
                         <Col sm="10">
                           {" "}
                           <Form.Control
                             type="number"
-                            placeholder="Enter Hub Id"
+                            placeholder={currentDate}
+                            disabled
                           />
+                        </Col>
+                      </Form.Group>
+                      <Form.Group as={Row} className="mb-3" controlId="hubID">
+                        <Form.Label column sm="2">
+                          Hub ID
+                        </Form.Label>
+                        <Col sm="10">
+                          {" "}
+                          <Form.Control
+                            as="select"
+                            defaultValue={"Alpha"}
+                            onChange={(e) => {
+                              handleSelect(e.target.value);
+                            }}
+                          >
+                            <option value={"Alpha"}>Alpha</option>
+                            <option value={"Bravo"}>Bravo</option>
+                            <option value={"Charlie"}>Charlie</option>
+                            <option value={"Delta"}>Delta</option>
+                          </Form.Control>
                         </Col>
                       </Form.Group>
                       <Form.Group
@@ -140,15 +249,19 @@ export default function HubDashboard() {
                         controlId="energyAmount"
                       >
                         <Form.Label column sm="2">
-                          Energy
+                          Amount of Energy to Sell(W)
                         </Form.Label>
                         <Col sm="10">
                           {" "}
                           <Form.Control
                             type="number"
-                            placeholder="Amount Energy Sold"
+                            value={amt}
+                            onChange={(e) => {
+                              handleChangeAmt(e.target.value);
+                            }}
+                            placeholder="Amount of Energy Sold"
                           />
-                          <Form.Text>Conversion Rate: 0.2 x Energy </Form.Text>
+                          <Form.Text>Conversion Rate: 0.2 x Energy</Form.Text>
                         </Col>
                       </Form.Group>
                     </Form>
@@ -157,7 +270,13 @@ export default function HubDashboard() {
                     <Button variant="secondary" onClick={sellhandleClose}>
                       Close
                     </Button>
-                    <Button variant="primary">Start Transaction</Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => sellElectricity(5)}
+                      disabled={isLoadingSell}
+                    >
+                      Complete Transaction
+                    </Button>
                   </Modal.Footer>
                 </Modal>
               </Card.Body>

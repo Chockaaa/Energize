@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavigationBar from "./NavigationBar";
 import { Container, Card, Button, Modal, Form } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useAuth } from "../../contexts/AuthContext";
+
+import { updateUserCreditBalance } from "../../db/UsersDB";
 
 export default function HubDashboard() {
   const [buyshow, buysetShow] = useState(false);
@@ -13,10 +16,11 @@ export default function HubDashboard() {
 
   const sellhandleClose = () => sellsetShow(false);
   const sellhandleShow = () => sellsetShow(true);
+
   return (
     <>
-    <NavigationBar/>
-    <Container>
+      <NavigationBar />
+      <Container>
         <Row className="mx-auto my-5">
           <div className="col d-flex justify-content-center">
             <h1>Energy Hub Services</h1>
@@ -118,30 +122,35 @@ export default function HubDashboard() {
                   </Modal.Header>
                   <Modal.Body>
                     <Form>
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Hub ID</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
-                        <Form.Text className="text-muted">
-                          We'll never share your email with anyone else.
-                        </Form.Text>
-                      </Form.Group>
-
-                      <Form.Group
-                        className="mb-3"
-                        controlId="formBasicPassword"
-                      >
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                      <Form.Group as={Row} className="mb-3" controlId="hubID">
+                        <Form.Label column sm="2">
+                          Hub ID
+                        </Form.Label>
+                        <Col sm="10">
+                          {" "}
+                          <Form.Control
+                            type="number"
+                            placeholder="Enter Hub Id"
+                          />
+                        </Col>
                       </Form.Group>
                       <Form.Group
+                        as={Row}
                         className="mb-3"
-                        controlId="formBasicCheckbox"
+                        controlId="energyAmount"
                       >
-                        <Form.Check type="checkbox" label="Check me out" />
+                        <Form.Label column sm="2">
+                          Energy
+                        </Form.Label>
+                        <Col sm="10">
+                          {" "}
+                          <Form.Control
+                            type="number"
+                            placeholder="Amount Energy Sold"
+                          />
+                          <Form.Text>Conversion Rate: 0.2 x Energy </Form.Text>
+                        </Col>
                       </Form.Group>
-                      <Button variant="primary" type="submit">
-                        Submit
-                      </Button>
                     </Form>
                   </Modal.Body>
                   <Modal.Footer>
@@ -157,5 +166,5 @@ export default function HubDashboard() {
         </Row>
       </Container>
     </>
-  )
+  );
 }

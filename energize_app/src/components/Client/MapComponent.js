@@ -36,7 +36,7 @@ function Map() {
     const center = useMemo(() => ({ lat: 18.9712, lng: -73.2852 }), []);
     const mapStyle = useMemo(() => ({
         width: '100%',
-        height: '530px'
+        height: '500px'
     }))
 
     const handleOnClick = (selected) => {

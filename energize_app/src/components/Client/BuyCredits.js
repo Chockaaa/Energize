@@ -59,7 +59,7 @@ const BuyCredits = () => {
       <div className="d-flex justify-content-center align-content-center mt-5">
         {packages.map((p) => (
           <Card className="mx-3 mt-5 text-center" key={p.id}>
-            <Card.Img variant="top" src="logo.jpg" />
+            <Card.Img variant="top" src="images/logo.jpg" />
             <Card.Body>
               <Card.Title>{p.credits} credits</Card.Title>
               <Button

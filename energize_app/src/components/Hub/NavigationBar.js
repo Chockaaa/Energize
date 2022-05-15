@@ -7,7 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Typography } from "@mui/material";
-import { getUserCreditBalance } from "../../db/UsersDB";
+import { getUserInfo } from "../../db/UsersDB";
 
 
 const NavigationBar = () => {
@@ -36,7 +36,7 @@ const NavigationBar = () => {
   }
 
   useEffect(() => {
-  getUserCreditBalance(currentUser.email).then(res=>setUserInfo({...userInfo,credit:res}))
+  getUserInfo(currentUser.email).then(res=>setUserInfo({...userInfo,credit:res}))
   },[]);
 
   return (

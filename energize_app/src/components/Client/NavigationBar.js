@@ -78,7 +78,7 @@ const NavigationBar = () => {
                   <Row>
                     <Col></Col>
                     <Col>
-                      <Image src="./profile.png" roundedCircle className="w-100"></Image>
+                      <Image src="images/profile.png" roundedCircle className="w-100"></Image>
                     </Col>
                     <Col></Col>
                   </Row>

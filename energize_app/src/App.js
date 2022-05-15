@@ -11,9 +11,9 @@ import Dashboard from "./components/Client/Dashboard"
 import ForgotPassword from "./components/Client/ForgotPassword"
 import Transactions from "./components/Client/Transactions"
 import SolarPanel from "./components/Client/SolarPanel"
+import BuyCredits from "./components/Client/BuyCredits"
 
 //Hub
-import HubSignup from "./components/Hub/Signup"
 import HubLogin from "./components/Hub/Login"
 import HubForgotPassword from "./components/Hub/ForgotPassword"
 
@@ -32,11 +32,11 @@ function App() {
               <Route exact path="/Book" element={<PrivateRoute><Booking/></PrivateRoute>}/>
               <Route exact path="/Transactions" element={<PrivateRoute><Transactions/></PrivateRoute>} />
               <Route exact path="/SolarPanels" element={<PrivateRoute><SolarPanel/></PrivateRoute>} />
+              <Route exact path="/BuyCredits" element={<PrivateRoute><BuyCredits/></PrivateRoute>} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
 
-              <Route path="/hub/signup" element={<HubSignup />} />
               <Route path="/hub/login" element={<HubLogin />} />
               <Route path="/hub/forgot-password" element={<HubForgotPassword />} />
             </Routes>

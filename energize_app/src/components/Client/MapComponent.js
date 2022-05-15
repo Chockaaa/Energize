@@ -1,9 +1,9 @@
 
 import { useMemo, useState, useEffect } from "react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow, DirectionsRenderer } from "@react-google-maps/api";
-import { Button } from "react-bootstrap"
+import { Button, Card, Image, ListGroup } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
-import {getHubs} from '../../db/HubsDB'
+import { getHubs } from '../../db/HubsDB'
 export default function MapComp() {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
@@ -17,6 +17,12 @@ function Map() {
     const [markers, setMarkers] = useState([])
     const [selectedMarker, setSelectedMarker] = useState(null)
     const [directions, setDirections] = useState(null);
+    const imgSources= {
+        "1001":"/images/1001.jpg",
+        "1002":"/images/1002.jpg",
+        "1003":"/images/1003.jpg",
+        "1004":"/images/1004.jpg"
+    }
     const navigate = useNavigate()
     //hardcoded starting point for map
     const startPoint = { lat: 18.572274, lng: -72.326882 }
@@ -99,14 +105,17 @@ function Map() {
                             setSelectedMarker(null);
                         }}
                     >
-                        <div>
-                            <img height='100px' width='250px' src="https://lh5.googleusercontent.com/p/AF1QipORyPFKRG4fdGCPKwITLY9fL8Iv6eH9m6ghJBnf=w408-h274-k-no"></img>
-                            <h3>Hub Name: {selectedMarker.hubName}</h3>
-                            <h5>Current capacity(Watts): {selectedMarker.hubCurrentCapacity}/{selectedMarker.hubMaxCapacity}</h5>
-                            <Button value={selectedMarker.hubName}
-                                onClick={(e) => { handleOnClick(e.target.value) }}
-                            >Book now</Button>
-                        </div>
+                        <Card >
+                            <img width="100%" height="160px"src={imgSources[selectedMarker.id]}></img>
+                                <ListGroup variant="flush">
+                                    <ListGroup.Item>Hub Name: {selectedMarker.hubName}</ListGroup.Item>
+                                    <ListGroup.Item>Current Capacity(Watts): {selectedMarker.hubCurrentCapacity}</ListGroup.Item>
+                                    <ListGroup.Item>Maximum Capacity(Watts): {selectedMarker.hubMaxCapacity}</ListGroup.Item>
+                                </ListGroup>
+                                <Button  size='sm'   value={selectedMarker.hubName}
+                                    onClick={(e) => { handleOnClick(e.target.value) }}
+                                >Book now</Button>
+                        </Card>
                     </InfoWindow>
                 </>
 

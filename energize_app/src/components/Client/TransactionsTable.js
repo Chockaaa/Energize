@@ -86,7 +86,6 @@ const TransactionsTable = ({ transactions }) => {
         cost,
         creditsEarned,
       } = transactions[i];
-      console.log(creditsEarned)
       rows.push({
         hubid: hubId,
         type: transactionType === 0 ? "Buy" : "Sell",

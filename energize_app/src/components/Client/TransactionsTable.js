@@ -86,6 +86,7 @@ const TransactionsTable = ({ transactions }) => {
         cost,
         creditsEarned,
       } = transactions[i];
+      console.log(creditsEarned)
       rows.push({
         hubid: hubId,
         type: transactionType === 0 ? "Buy" : "Sell",
@@ -94,7 +95,7 @@ const TransactionsTable = ({ transactions }) => {
         datecreated: dateCreated.toDate().toLocaleString(),
         datecompleted: dateCompleted ? dateCompleted.toDate().toLocaleString() : "",
         cost: cost,
-        creditsearned: creditsEarned || "-",
+        creditsearned: creditsEarned,
         actions: status === "Pending" && (
           <Button
             variant="danger"
@@ -120,6 +121,7 @@ const TransactionsTable = ({ transactions }) => {
         data={datatable}
         searchTop
         searchBottom={false}
+        className="mt-3 px-3"
       />
       <Modal show={show} onHide={handleClose} centered backdrop="static" keyboard={false}>
         <Modal.Header closeButton>

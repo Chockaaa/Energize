@@ -4,6 +4,7 @@ function addUser(email) {
   let data = {
     userName: email,
     creditBalance: 0,
+    accountNumber: "",
   };
   db.collection("Users")
     .add({

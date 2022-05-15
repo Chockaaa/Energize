@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Nav, Navbar, Container, Button } from "react-bootstrap";
@@ -7,7 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Typography } from "@mui/material";
-import { getUserCreditBalance } from "../db/UsersDB";
+import { getUserCreditBalance } from "../../db/UsersDB";
 
 
 const NavigationBar = () => {

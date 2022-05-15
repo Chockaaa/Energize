@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { MDBDataTableV5 } from "mdbreact";
 import { Button, Modal } from "react-bootstrap";
-import { cancelTransaction } from "../db/TransactionsDB";
+import { cancelTransaction } from "../../db/TransactionsDB";
 
 const TransactionsTable = ({ transactions }) => {
   const [show, setShow] = useState(false);

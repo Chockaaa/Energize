@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import NavigationBar from "./NavigationBar";
-import { getTransactionsByEmail } from "../db/TransactionsDB";
+import { getTransactionsByEmail } from "../../db/TransactionsDB";
 import TransactionsGraph from "./TransactionsGraph"
 import TransactionsTable from "./TransactionsTable";
 import { Container } from "react-bootstrap";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);

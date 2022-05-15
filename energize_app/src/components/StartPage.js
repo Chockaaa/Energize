@@ -15,7 +15,7 @@ const StartPage = () => {
         style={{ height: LOGO_SIZE, width: LOGO_SIZE }}
       />
       <Button onClick={() => navigate("/login")}>Client</Button>
-      <Button>Hub</Button>
+      <Button onClick={() => navigate("/hub/login")}>Hub</Button>
     </div>
   )
 }

@@ -12,6 +12,18 @@ function getTransactionsByEmail(email) {
     .catch((err) => console.error(err));
 }
 
+function getPendingTransactionsByEmail(email) {
+  return db
+    .collection("Transactions")
+    .where("userName", "==", email)
+    .where("status","==","Pending")
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot.docs;
+    })
+    .catch((err) => console.error(err));
+}
+
 function cancelTransaction(id) {
   return db
     .collection("Transactions")
@@ -26,4 +38,4 @@ function addTransaction(data) {
     })
     .catch((err) => console.error(err));
 }
-export { getTransactionsByEmail, cancelTransaction,addTransaction };
+export { getTransactionsByEmail, cancelTransaction,addTransaction,getPendingTransactionsByEmail };

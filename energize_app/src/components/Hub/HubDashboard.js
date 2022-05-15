@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { updateUserCreditBalance } from "../../db/UsersDB";
 import { useAuth } from "../../contexts/AuthContext";
-import { addTransaction } from "../../db/TransactionsDB";
+import { addTransaction, getPendingTransactionsByEmail } from "../../db/TransactionsDB";
 import { getHubFromName, updateHubEnergyCapacity } from "../../db/HubsDB";
 
 export default function HubDashboard() {
@@ -29,6 +29,8 @@ export default function HubDashboard() {
   const [docId, setDocId] = useState(0);
 
   const [isLoadingSell, setLoadingSell] = useState(false);
+
+  const [pendingTransactions,setPendingTransactions] =useState([])
 
   const handleChangeAmt = (value) => {
     try {
@@ -64,6 +66,19 @@ export default function HubDashboard() {
     sellsetShow(false);
     setAmt(0);
   }
+
+  useEffect(() => {
+    getPendingTransactionsByEmail(currentUser.email).then(res=>{
+      const transactionsArray = [];
+      for (let i in res) {
+        const doc = res[i].data();
+        doc.id = res[i].id;
+        transactionsArray.push(doc);
+      }
+      setPendingTransactions([...transactionsArray]);
+    })
+
+  },[]);
 
   useEffect(() => {
     getHubFromName("Alpha").then((res) => {

@@ -2,26 +2,25 @@ import React, { useState,useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Nav, Navbar, Container, Button } from "react-bootstrap";
+import { Nav, Navbar, Container, Button, Image } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Typography } from "@mui/material";
-import { getUserCreditBalance } from "../../db/UsersDB";
-
+import { getUserInfo } from "../../db/UsersDB";
+import CreditCardForm from "./CreditCardForm";
 
 const NavigationBar = () => {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [showCreditCardForm, setShowCreditCardForm] = useState(false);
 
   const [userInfo, setUserInfo] = useState({
     userEmail: currentUser.email,
-    credit: 100,
+    credit: 0,
+    creditCardNumber: null
   });
 
   
@@ -36,8 +35,14 @@ const NavigationBar = () => {
   }
 
   useEffect(() => {
-  getUserCreditBalance(currentUser.email).then(res=>setUserInfo({...userInfo,credit:res}))
-  },[]);
+    getUserInfo(currentUser.email).then((res) => {
+      let { creditBalance, creditCardInfo: { cardNumber } } = res;
+      cardNumber = cardNumber.replace(/[^0-9]+/g, '');
+      let l = cardNumber.length;
+      cardNumber = cardNumber.substring(0,4) + "*".repeat(l-8) + cardNumber.substring(l-4,l);
+      setUserInfo({ ...userInfo, credit: creditBalance, creditCardNumber: cardNumber });
+    });
+  }, [currentUser.email]);
 
   return (
     
@@ -50,10 +55,11 @@ const NavigationBar = () => {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/Book">Book a Hub</Nav.Link>
             <Nav.Link href="/Transactions">Transactions</Nav.Link>
+            <Nav.Link href="/BuyCredits">Buy Credits</Nav.Link>
             <Nav.Link href="/SolarPanels">Buy/Rent Solar Panels</Nav.Link>
           </Nav>
           <>
-            <Button variant="outline-light" onClick={handleShow}>
+            <Button variant="outline-light" onClick={() => setShow(true)}>
               <img
                 src="/images/logo.jpg"
                 width="30"
@@ -63,40 +69,59 @@ const NavigationBar = () => {
               />
             </Button>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={() => setShow(false)} centered backdrop="static" keyboard={false}>
               <Modal.Header closeButton>
-                <Modal.Title>User Info</Modal.Title>
+                <Modal.Title>User Information</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Container>
                   <Row>
                     <Col></Col>
                     <Col>
-                      <img src="/images/profile.png" width="100%" height="100%" class="d-inline-block align-top" alt="" />
+                      <Image src="./profile.png" roundedCircle className="w-100"></Image>
                     </Col>
                     <Col></Col>
                   </Row>
-                  <Row className="mx-auto my-5">
-                    <Typography sx={{ letterSpacing: 2, fontFamily: 'default', textTransform: 'uppercase' }}  variant="h5" align="center">
+                  <Row className="mx-auto my-3">
+                    <Typography sx={{ letterSpacing: 2, fontFamily: 'default' }}  variant="h5" align="center">
                       {userInfo.userEmail}
                     </Typography>
                   </Row>
-                  <Row className="mx-auto my-5">
-                    <Typography sx={{ letterSpacing: 2, fontFamily: 'default',textTransform: 'uppercase' }} variant="h5" align="center">
+                  <Row className="mx-auto my-3">
+                    <Typography sx={{ letterSpacing: 2, fontFamily: 'default' }} variant="h5" align="center">
                       Credits: {userInfo.credit}
+                    </Typography>
+                  </Row>
+                  <Row className="mx-auto my-3">
+                    <Typography sx={{ letterSpacing: 2, fontFamily: 'default' }} variant="h5" align="center">
+                      {userInfo.creditCardNumber ? `Account number: ${userInfo.creditCardNumber}` : <Button onClick={() => {
+                        setShow(false)
+                        setShowCreditCardForm(true)
+                      }}>Add Account</Button>}
                     </Typography>
                   </Row>
                 </Container>
               </Modal.Body>
-              <Modal.Footer>
+              <Modal.Footer className="d-flex justify-content-center">
                 {error && <Alert variant="danger">{error}</Alert>}
-                <Button variant="outline-dark" onClick={handleClose}>
-                  Close
-                </Button>
                 <Button variant="outline-danger" onClick={handleLogout}>
                   Log Out
                 </Button>
               </Modal.Footer>
+            </Modal>
+            <Modal show={showCreditCardForm} onHide={() => setShowCreditCardForm(false)} size="lg" centered backdrop="static" keyboard={false}>
+              <Modal.Header closeButton>
+                <Modal.Title>Credit Card Information</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Container>
+                  <Row className="mx-auto my-3">
+                    <Typography sx={{ letterSpacing: 2, fontFamily: 'default' }} variant="h5" align="center">
+                      {showCreditCardForm && <CreditCardForm setShowCreditCardForm={setShowCreditCardForm} />}
+                    </Typography>
+                  </Row>
+                </Container>
+              </Modal.Body>
             </Modal>
           </>
         </Navbar.Collapse>

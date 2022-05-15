@@ -1,5 +1,6 @@
 import { db } from "../firebase";
 import firebase from "firebase/compat/app";
+
 function getTransactionsByEmail(email) {
   return db
     .collection("Transactions")

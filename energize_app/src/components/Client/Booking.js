@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavigationBar from "./NavigationBar";
 import { Button, Form, Card, Modal } from "react-bootstrap"
 import { Outlet, useParams } from "react-router-dom";
-import { getHubFromName } from '../../db/HubDB'
+import { getHubFromName } from '../../db/HubsDB'
 import { addTransaction } from "../../db/TransactionsDB";
 import { useAuth } from "../../contexts/AuthContext";
 

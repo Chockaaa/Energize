@@ -7,9 +7,10 @@ export default function Dashboard() {
     <>
       <NavigationBar />
       <Container>
-        <Row>
+        <Row className="mt-3">
         <div className="col d-flex justify-content-center">
-          <h2>Map of Hubs</h2>
+          <h2 >
+            <b>Map of Hubs</b></h2>
         </div>
         </Row>
         <Row>

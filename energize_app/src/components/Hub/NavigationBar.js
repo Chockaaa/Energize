@@ -100,7 +100,7 @@ const NavigationBar = () => {
                       variant="h5"
                       align="center"
                     >
-                      Credits: {userInfo.credit} <CreditsIcon /> hi
+                      Credits: {userInfo.credit} <CreditsIcon />
                     </Typography>
                   </Row>
                 </Container>

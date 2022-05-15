@@ -3,9 +3,7 @@ import NavigationBar from "./NavigationBar";
 import { Container, Card, Button, Modal, Form } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useAuth } from "../../contexts/AuthContext";
 
-import { updateUserCreditBalance } from "../../db/UsersDB";
 
 export default function HubDashboard() {
   const [buyshow, buysetShow] = useState(false);
@@ -16,6 +14,8 @@ export default function HubDashboard() {
 
   const sellhandleClose = () => sellsetShow(false);
   const sellhandleShow = () => sellsetShow(true);
+
+  const current = new Date();
 
   return (
     <>
@@ -122,6 +122,19 @@ export default function HubDashboard() {
                   </Modal.Header>
                   <Modal.Body>
                     <Form>
+                    <Form.Group as={Row} className="mb-3" controlId="hubID">
+                        <Form.Label column sm="2">
+                          Transaction Start
+                        </Form.Label>
+                        <Col sm="10">
+                          {" "}
+                          <Form.Control
+                            type="number"
+                            placeholder={current}
+                            disabled
+                          />
+                        </Col>
+                      </Form.Group>
                       <Form.Group as={Row} className="mb-3" controlId="hubID">
                         <Form.Label column sm="2">
                           Hub ID
@@ -148,7 +161,7 @@ export default function HubDashboard() {
                             type="number"
                             placeholder="Amount Energy Sold"
                           />
-                          <Form.Text>Conversion Rate: 0.2 x Energy </Form.Text>
+                          <Form.Text>Conversion Rate: 0.2 x Energy</Form.Text>
                         </Col>
                       </Form.Group>
                     </Form>

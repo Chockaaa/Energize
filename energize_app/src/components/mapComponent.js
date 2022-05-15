@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {getHubs} from '../db/HubDB'
 export default function MapComp() {
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyA5FKJwPSdMiQpSCPaWS1oo2O7rgCCnBOE',
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
     });
 
     if (!isLoaded) return <div>Loading...</div>;

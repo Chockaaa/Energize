@@ -9,7 +9,7 @@ const StartPage = () => {
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">
       <Image
-        src="./logo.jpg"
+        src="/images/logo.jpg"
         roundedCircle
         className="m-5"
         style={{ height: LOGO_SIZE, width: LOGO_SIZE }}

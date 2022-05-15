@@ -121,7 +121,7 @@ const TransactionsTable = ({ transactions }) => {
         searchTop
         searchBottom={false}
       />
-      <Modal show={show} onHide={handleClose} centered>
+      <Modal show={show} onHide={handleClose} centered backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>Cancel Transaction</Modal.Title>
         </Modal.Header>

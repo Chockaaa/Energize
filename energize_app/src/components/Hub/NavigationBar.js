@@ -15,7 +15,7 @@ const NavigationBar = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [showCreditCardForm, setShowCreditCardForm] = useState(false);
+  
 
   const [userInfo, setUserInfo] = useState({
     userEmail: currentUser.email,

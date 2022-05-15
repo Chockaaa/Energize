@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import NavigationBar from "./NavigationBar";
-import { Container, Card, Button, Modal, Form } from "react-bootstrap";
+import { Container, Card, Button, Modal, Form, Offcanvas } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { updateUserCreditBalance } from "../../db/UsersDB";
 import { useAuth } from "../../contexts/AuthContext";
-import { addTransaction } from "../../db/TransactionsDB";
+import { addTransaction, getPendingTransactionsByEmail } from "../../db/TransactionsDB";
 import { getHubFromName, updateHubEnergyCapacity } from "../../db/HubsDB";
+import TransactionsTable from "./TransactionsTable";
 
 export default function HubDashboard() {
   const [buyshow, buysetShow] = useState(false);
@@ -28,7 +29,9 @@ export default function HubDashboard() {
   const [convRate, setConvRate] = useState(0.2);
   const [docId, setDocId] = useState(0);
 
-  const [isLoadingSell, setLoadingSell] = useState(false);
+
+  const [showCanvas, setShowCanvas] = useState(false);
+  const [pendingTransactions,setPendingTransactions] =useState([])
 
   const handleChangeAmt = (value) => {
     try {
@@ -60,10 +63,23 @@ export default function HubDashboard() {
     addTransaction(data);
     updateUserCreditBalance(currentUser.email, data.creditsEarned);
     updateHubEnergyCapacity(data.creditsEarned, data.hubId);
-    setLoadingSell(true);
     sellsetShow(false);
     setAmt(0);
+
   }
+
+  useEffect(() => {
+    getPendingTransactionsByEmail(currentUser.email).then(res=>{
+      const transactionsArray = [];
+      for (let i in res) {
+        const doc = res[i].data();
+        doc.id = res[i].id;
+        transactionsArray.push(doc);
+      }
+      setPendingTransactions([...transactionsArray]);
+    })
+
+  },[]);
 
   useEffect(() => {
     getHubFromName("Alpha").then((res) => {
@@ -108,6 +124,7 @@ export default function HubDashboard() {
   return (
     <>
       <NavigationBar />
+      {JSON.stringify(pendingTransactions)}
       <Container>
         <Row className="mx-auto my-5">
           <div className="col d-flex justify-content-center">
@@ -133,7 +150,7 @@ export default function HubDashboard() {
                   Buy Electricity
                 </Button>{" "}
                 <Modal
-                  size="lg"
+                  size="xl"
                   show={buyshow}
                   onHide={buyhandleClose}
                   backdrop="static"
@@ -143,38 +160,13 @@ export default function HubDashboard() {
                     <Modal.Title>Buy Electricity</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <Form>
-                      <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
-                        <Form.Text className="text-muted">
-                          We'll never share your email with anyone else.
-                        </Form.Text>
-                      </Form.Group>
-
-                      <Form.Group
-                        className="mb-3"
-                        controlId="formBasicPassword"
-                      >
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
-                      </Form.Group>
-                      <Form.Group
-                        className="mb-3"
-                        controlId="formBasicCheckbox"
-                      >
-                        <Form.Check type="checkbox" label="Check me out" />
-                      </Form.Group>
-                      <Button variant="primary" type="submit">
-                        Submit
-                      </Button>
-                    </Form>
+                  <TransactionsTable transactions={pendingTransactions} />
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={buyhandleClose}>
                       Close
                     </Button>
-                    <Button variant="primary">Start Transaction</Button>
+                    
                   </Modal.Footer>
                 </Modal>
               </Card.Body>
@@ -273,7 +265,6 @@ export default function HubDashboard() {
                     <Button
                       variant="primary"
                       onClick={() => sellElectricity(5)}
-                      disabled={isLoadingSell}
                     >
                       Complete Transaction
                     </Button>
@@ -284,6 +275,7 @@ export default function HubDashboard() {
           </Col>
         </Row>
       </Container>
+
     </>
   );
 }

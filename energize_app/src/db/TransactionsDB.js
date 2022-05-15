@@ -1,5 +1,5 @@
 import { db } from "../firebase";
-
+import firebase from "firebase/compat/app";
 function getTransactionsByEmail(email) {
   return db
     .collection("Transactions")
@@ -17,5 +17,12 @@ function cancelTransaction(id) {
     .doc(id)
     .update({ status: "Cancelled" });
 }
-
-export { getTransactionsByEmail, cancelTransaction };
+function addTransaction(data) {
+  db.collection("Transactions")
+    .add({
+      ...data,
+      dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    .catch((err) => console.error(err));
+}
+export { getTransactionsByEmail, cancelTransaction,addTransaction };
